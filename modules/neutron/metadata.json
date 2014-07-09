@@ -1,0 +1,903 @@
+{
+  "name": "puppetlabs-neutron",
+  "version": "3.3.0",
+  "source": "https://github.com/stackforge/puppet-neutron",
+  "author": "Joe Topjian,Endre Karlson,Emilien Macchi,Dan Bode,Dmitry Ukov,Edgar Mangana,Robert Starmer,Ian Wells,Daneyon Hansen",
+  "license": "Apache License 2.0",
+  "summary": "Puppet module for OpenStack Neutron",
+  "description": "Puppet module to install and configure the OpenStack network service, Neutron",
+  "project_page": "https://launchpad.net/puppet-neutron",
+  "dependencies": [
+    {
+      "name": "puppetlabs/vswitch",
+      "version_requirement": ">=0.2.0 <1.0.0"
+    },
+    {
+      "name": "puppetlabs/inifile",
+      "version_requirement": ">=1.0.0 <2.0.0"
+    },
+    {
+      "name": "puppetlabs/mysql",
+      "version_requirement": ">=0.9.0 <1.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=3.2.0"
+    },
+    {
+      "name": "puppetlabs/keystone",
+      "version_requirement": ">=3.0.0 <4.0.0"
+    },
+    {
+      "name": "puppetlabs/nova",
+      "version_requirement": ">=3.0.0 <4.0.0"
+    }
+  ],
+  "types": [
+    {
+      "name": "neutron_api_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from api-paste.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from neutron.conf\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_dhcp_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from dhcp_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_fwaas_service_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from fwaas_driver.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_l3_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from l3_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_l3_ovs_bridge",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Symbolic name for the ovs bridge\n\nValues can match `/.*/`."
+        },
+        {
+          "name": "subnet_name",
+          "doc": "Name of the subnet that will use the bridge as gateway\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_l3_ovs_bridge type.\n\nThe provider ensures that the gateway ip of the subnet is\nconfigured on the ovs bridge.\n\n* Required binaries: `/sbin/ip`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_lbaas_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from lbaas_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_metadata_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from metadata_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_metering_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from metering_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_network",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "id",
+          "doc": "The unique id of the network\n\n"
+        },
+        {
+          "name": "admin_state_up",
+          "doc": "The administrative status of the network\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        },
+        {
+          "name": "shared",
+          "doc": "Whether this network should be shared across all tenants or not\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        },
+        {
+          "name": "tenant_id",
+          "doc": "A uuid identifying the tenant which will own the network.\n\n"
+        },
+        {
+          "name": "provider_network_type",
+          "doc": "The physical mechanism by which the virtual network is realized.\n\nValid values are `flat`, `vlan`, `local`, `gre`. "
+        },
+        {
+          "name": "provider_physical_network",
+          "doc": "The name of the physical network over which the virtual network\nis realized for flat and VLAN networks.\n\nValues can match `/\\S+/`."
+        },
+        {
+          "name": "provider_segmentation_id",
+          "doc": "Identifies an isolated segment on the physical network.\n\n"
+        },
+        {
+          "name": "router_external",
+          "doc": "Whether this router will route traffic to an external network\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Symbolic name for the network\n\nValues can match `/.*/`."
+        },
+        {
+          "name": "tenant_name",
+          "doc": "The name of the tenant which will own the network.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_network type.\n\nAssumes that the neutron service is configured on the same host.\n\n* Required binaries: `neutron`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_cisco",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from cisco_plugins.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_cisco_credentials",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from credentials.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_cisco_db_conn",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from plugins/cisco/db_conn.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_cisco_l2network",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from plugins/cisco/l2network_plugin.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_linuxbridge",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from linuxbridge_conf.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_ml2",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from ml2_conf.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_nvp",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from nvp.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_plugin_ovs",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from ovs_neutron_plugin.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    },
+    {
+      "name": "neutron_port",
+      "doc": "This is currently used to model the creation of neutron ports.\n\nPorts are used when associating a network and a router interface.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "id",
+          "doc": "The unique id of the port\n\n"
+        },
+        {
+          "name": "admin_state_up",
+          "doc": "The administrative status of the router\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        },
+        {
+          "name": "network_name",
+          "doc": "      The name of the network that this port is assigned to on creation.\n\n"
+        },
+        {
+          "name": "network_id",
+          "doc": "      The uuid of the network that this port is assigned to on creation.\n\n"
+        },
+        {
+          "name": "subnet_name",
+          "doc": "A subnet to which the port is assigned on creation.\n\n"
+        },
+        {
+          "name": "subnet_id",
+          "doc": "      The uuid of the subnet on which this ports ip exists.\n\n"
+        },
+        {
+          "name": "ip_address",
+          "doc": "A static ip address given to the port on creation.\n\n"
+        },
+        {
+          "name": "status",
+          "doc": "Whether the port is currently operational or not.\n\n"
+        },
+        {
+          "name": "tenant_id",
+          "doc": "A uuid identifying the tenant which will own the port.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Symbolic name for the port\n\nValues can match `/.*/`."
+        },
+        {
+          "name": "tenant_name",
+          "doc": "The name of the tenant which will own the port.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_port type.\n\nAssumes that the neutron service is configured on the same host.\n\n* Required binaries: `neutron`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_router",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "id",
+          "doc": "The unique id of the router\n\n"
+        },
+        {
+          "name": "admin_state_up",
+          "doc": "The administrative status of the router\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        },
+        {
+          "name": "external_gateway_info",
+          "doc": "External network that this router connects to for gateway services\n(e.g., NAT).\n\n"
+        },
+        {
+          "name": "gateway_network_name",
+          "doc": "The name of the external network that this router connects to\nfor gateway services (e.g. NAT).\n\n"
+        },
+        {
+          "name": "gateway_network_id",
+          "doc": "The uuid of the external network that this router connects to\nfor gateway services (e.g. NAT).\n\n"
+        },
+        {
+          "name": "status",
+          "doc": "Whether the router is currently operational or not.\n\n"
+        },
+        {
+          "name": "tenant_id",
+          "doc": "A uuid identifying the tenant which will own the router.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Symbolic name for the router\n\nValues can match `/.*/`."
+        },
+        {
+          "name": "tenant_name",
+          "doc": "The name of the tenant which will own the router.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_router type.\n\nAssumes that the neutron service is configured on the same host.\n\n* Required binaries: `neutron`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_router_interface",
+      "doc": "This is currently used to model the creation of\nneutron router interfaces.\n\nRouter interfaces are an association between a router and a\nsubnet.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "id",
+          "doc": "\n\n"
+        },
+        {
+          "name": "router_name",
+          "doc": "\n\n"
+        },
+        {
+          "name": "subnet_name",
+          "doc": "\n\n"
+        },
+        {
+          "name": "port",
+          "doc": "An existing neutron port to which a rounter interface should be assigned\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "\n\nValues can match `/^\\S+:\\S+$/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_router_interface type.\n\nAssumes that the neutron service is configured on the same host.\n\nIt is not possible to manage an interface for the subnet used by\nthe gateway network, and such an interface will appear in the list\nof resources ('puppet resource [type]').  Attempting to manage the\ngateway interfae will result in an error.\n\n* Required binaries: `neutron`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_subnet",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "id",
+          "doc": "The unique id of the subnet\n\n"
+        },
+        {
+          "name": "cidr",
+          "doc": "CIDR representing IP range for this subnet, based on IP version\n\n"
+        },
+        {
+          "name": "ip_version",
+          "doc": "The IP version of the CIDR\n\nValid values are `4`, `6`. "
+        },
+        {
+          "name": "allocation_pools",
+          "doc": "Array of Sub-ranges of cidr available for dynamic allocation to ports.\nSyntax:[\"start=IPADDR,end=IPADDR\", ...]\n\n"
+        },
+        {
+          "name": "gateway_ip",
+          "doc": "The default gateway used by devices in this subnet\n\n"
+        },
+        {
+          "name": "enable_dhcp",
+          "doc": "Whether DHCP is enabled for this subnet or not.\n\nValues can match `/(t|T)rue/`, `/(f|F)alse/`."
+        },
+        {
+          "name": "host_routes",
+          "doc": "Array of routes that should be used by devices with IPs from this subnet\n(not including local subnet route).\nSyntax:[\"destination=CIDR,nexhop=IP_ADDR\", ...]\n\n"
+        },
+        {
+          "name": "dns_nameservers",
+          "doc": "    'Array of DNS name servers used by hosts in this subnet.'\n\n"
+        },
+        {
+          "name": "network_id",
+          "doc": "A uuid identifying the network this subnet is associated with.\n\n"
+        },
+        {
+          "name": "tenant_id",
+          "doc": "A uuid identifying the tenant which will own the subnet.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Symbolic name for the subnet\n\nValues can match `/.*/`."
+        },
+        {
+          "name": "network_name",
+          "doc": "The name of the network this subnet is associated with.\n\n"
+        },
+        {
+          "name": "tenant_name",
+          "doc": "The name of the tenant which will own the subnet.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "name": "neutron",
+          "doc": "Neutron provider to manage neutron_subnet type.\n\nAssumes that the neutron service is configured on the same host.\n\n* Required binaries: `neutron`."
+        }
+      ]
+    },
+    {
+      "name": "neutron_vpnaas_agent_config",
+      "doc": "",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value of the setting to be defined.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "Section/setting name to manage from vpn_agent.ini\n\nValues can match `/\\S+\\/\\S+/`."
+        }
+      ],
+      "providers": [
+        {
+          "name": "ini_setting",
+          "doc": ""
+        }
+      ]
+    }
+  ],
+  "checksums": {
+    "Gemfile": "b86e14d4180f63b741e87602e42fb3c4",
+    "LICENSE": "1dece7821bf3fd70fe1309eaa37d52a2",
+    "Modulefile": "dccdcfb5775be463e9792feb4aa014ad",
+    "README.md": "a6eaaf40ce84024d0b987e71358de934",
+    "Rakefile": "2ca4ff31c946a19edd44348fbfdc2aab",
+    "examples/base_provision.pp": "34b6dc4a44b49eb061a9e8433f6a7b9d",
+    "examples/create_network.sh": "32256ea9c0a927dd6b02e2907cd97bc7",
+    "examples/neutron.pp": "203feb59e162aa8871abfaf6960a871c",
+    "lib/puppet/parser/functions/validate_network_vlan_ranges.rb": "c6b943bebabce85fb665d70f31d0868a",
+    "lib/puppet/parser/functions/validate_tunnel_id_ranges.rb": "147a6488352ab5cca8b7c08a8b98d13c",
+    "lib/puppet/parser/functions/validate_vni_ranges.rb": "d3a0272b5ee197164c32abc3d96f3ad8",
+    "lib/puppet/parser/functions/validate_vxlan_udp_port.rb": "2e7a8f9b954c23d5e254e1d6f59f7377",
+    "lib/puppet/provider/neutron.rb": "d2d513032fdaf5c987a0ad1555d6a56f",
+    "lib/puppet/provider/neutron_api_config/ini_setting.rb": "631c8cae1605073b6cf73e9a88b0fbe4",
+    "lib/puppet/provider/neutron_config/ini_setting.rb": "3be345702d91cd43744f8eceed6bb658",
+    "lib/puppet/provider/neutron_dhcp_agent_config/ini_setting.rb": "34c4ef3300240a85fa59683307ae0a6a",
+    "lib/puppet/provider/neutron_fwaas_service_config/ini_setting.rb": "c3bc43b3a671cbb279eeb6c228bba0fe",
+    "lib/puppet/provider/neutron_l3_agent_config/ini_setting.rb": "b58b66445b7dcb8faaea1284fc24a718",
+    "lib/puppet/provider/neutron_l3_ovs_bridge/neutron.rb": "7f71590c588d08cda106a3525b98c51f",
+    "lib/puppet/provider/neutron_lbaas_agent_config/ini_setting.rb": "0f11d60319915d4b7866768ff127d5b2",
+    "lib/puppet/provider/neutron_metadata_agent_config/ini_setting.rb": "2792cdfdd3c7d1cd4c10e5a7a467a6cb",
+    "lib/puppet/provider/neutron_metering_agent_config/ini_setting.rb": "f0fd02e858a785389bcb46bd90561423",
+    "lib/puppet/provider/neutron_network/neutron.rb": "a1634a641c9e4e81a7e7aabc705bcd9e",
+    "lib/puppet/provider/neutron_plugin_cisco/ini_setting.rb": "548797197bac607556f341fb9d0bf375",
+    "lib/puppet/provider/neutron_plugin_cisco_credentials/ini_setting.rb": "85b730f62749cf862b7fcac0bac7f621",
+    "lib/puppet/provider/neutron_plugin_cisco_db_conn/ini_setting.rb": "6594e6554e11d8d0ca92768d04dc5d38",
+    "lib/puppet/provider/neutron_plugin_cisco_l2network/ini_setting.rb": "ff993835dc8b1160b4b50817c2540635",
+    "lib/puppet/provider/neutron_plugin_linuxbridge/ini_setting.rb": "14b51050879956a077ee186107faafba",
+    "lib/puppet/provider/neutron_plugin_ml2/ini_setting.rb": "e95fefe41a89fa9869809f0bca76197a",
+    "lib/puppet/provider/neutron_plugin_nvp/ini_setting.rb": "ab156e44fbc7017f24d2a5a9b5acdac5",
+    "lib/puppet/provider/neutron_plugin_ovs/ini_setting.rb": "8c2b5c9cc51704ed29026673b3bc4d55",
+    "lib/puppet/provider/neutron_port/neutron.rb": "05e3553a9906af9f904782bd82de71d5",
+    "lib/puppet/provider/neutron_router/neutron.rb": "1984ad8b3f538818f95d314142ed7226",
+    "lib/puppet/provider/neutron_router_interface/neutron.rb": "4d49f586c59c38367bfe5e06fb3371fd",
+    "lib/puppet/provider/neutron_subnet/neutron.rb": "d77d143b21f0d1b95b3d2c5060657964",
+    "lib/puppet/provider/neutron_vpnaas_agent_config/ini_setting.rb": "a38a2e680c1bd9c812462be1c907d83b",
+    "lib/puppet/type/neutron_api_config.rb": "99b0eca0d74636df1858f5dbc68a8708",
+    "lib/puppet/type/neutron_config.rb": "9de57ffe7acea6318a5ee959d28f3bb1",
+    "lib/puppet/type/neutron_dhcp_agent_config.rb": "1d84a246988a9dc694d78c8d11e0a786",
+    "lib/puppet/type/neutron_fwaas_service_config.rb": "e6f8fd329610b5870606f069f5aa5895",
+    "lib/puppet/type/neutron_l3_agent_config.rb": "e6569c8eb8229dcade9a0e1bf243e1e3",
+    "lib/puppet/type/neutron_l3_ovs_bridge.rb": "058d18a7e7cc88d446aa07cf25a657fe",
+    "lib/puppet/type/neutron_lbaas_agent_config.rb": "e9ff6b363708eff717c89b4a83d6126e",
+    "lib/puppet/type/neutron_metadata_agent_config.rb": "f12ba9af339e9bbd29b791a0a75931be",
+    "lib/puppet/type/neutron_metering_agent_config.rb": "92e2ec411b06e777e6a54be07f953108",
+    "lib/puppet/type/neutron_network.rb": "0d4ad607ba1f35f8e8faa319aa0a27c6",
+    "lib/puppet/type/neutron_plugin_cisco.rb": "1ad23adde81d5e8395f200c25bf2c04f",
+    "lib/puppet/type/neutron_plugin_cisco_credentials.rb": "7682f1efff298f94ce86ba449ac0c0f6",
+    "lib/puppet/type/neutron_plugin_cisco_db_conn.rb": "c282caef28a928e2be91998f177ff6bd",
+    "lib/puppet/type/neutron_plugin_cisco_l2network.rb": "69fde6803ee5cb7e8294037ef571fc60",
+    "lib/puppet/type/neutron_plugin_linuxbridge.rb": "ce1461b91660a20a4944f64d208cfe85",
+    "lib/puppet/type/neutron_plugin_ml2.rb": "91878082ae1568839f28f593ce6579c5",
+    "lib/puppet/type/neutron_plugin_nvp.rb": "ae7037c0d4cfbfc99c797e9c9d08d065",
+    "lib/puppet/type/neutron_plugin_ovs.rb": "8c9bbb54baa51424106cd852a0a465b0",
+    "lib/puppet/type/neutron_port.rb": "0d702eedd1cd17a97e1d1d85db568658",
+    "lib/puppet/type/neutron_router.rb": "cbfbf082bf43612d9c896547dea78988",
+    "lib/puppet/type/neutron_router_interface.rb": "84c220a451fe665fc65fae11db239c28",
+    "lib/puppet/type/neutron_subnet.rb": "377d588fc7ac4b8c779b745d34d76779",
+    "lib/puppet/type/neutron_vpnaas_agent_config.rb": "11ebe4cb0655013cb551390df1f046f4",
+    "manifests/agents/dhcp.pp": "8b7f5bf02190e91c06e944490b59f36a",
+    "manifests/agents/l3.pp": "7523006c4c237480570e952952162bf1",
+    "manifests/agents/lbaas.pp": "d01593b81752aefdec035758232d8cc2",
+    "manifests/agents/linuxbridge.pp": "dffdacd4d59b30589cfea0efe85c7203",
+    "manifests/agents/metadata.pp": "0f9bbedd72caca80912cbaf9718be3db",
+    "manifests/agents/metering.pp": "6803b7fefff5bc0bf8eade2676ebc718",
+    "manifests/agents/ovs.pp": "f5ac848d58c83be4bd21140c9d3fe098",
+    "manifests/agents/vpnaas.pp": "182383b1bff4ec861c0e97cbb4d66a67",
+    "manifests/client.pp": "338584745b937ea3309bcee01cb735e5",
+    "manifests/db/mysql/host_access.pp": "7d6f4a5e528ea329cb50b218f53b1b57",
+    "manifests/db/mysql.pp": "b65eaf7c5d3bc9ff06b318bce1db9b0c",
+    "manifests/init.pp": "07ec3f3b548d63b976d1a9db68a6680c",
+    "manifests/keystone/auth.pp": "ecd1a8aa841d0ac99bdb63a768a9ec37",
+    "manifests/params.pp": "63baea64f10e186ce7c2683446a7d21e",
+    "manifests/plugins/cisco.pp": "e6182b3505b460e260ef770e9e83ac12",
+    "manifests/plugins/linuxbridge.pp": "cdd1d6d6701619e84d96a768d4253473",
+    "manifests/plugins/ml2/driver.pp": "f2338629b868ab67a62a98c31ed6ac11",
+    "manifests/plugins/ml2.pp": "165e16c07739f1509e42a3328dda7f83",
+    "manifests/plugins/nvp.pp": "af019aec9b774eb8b04cd5af0f07ecf8",
+    "manifests/plugins/ovs/bridge.pp": "1a895380424cdf378d7f5966c656e250",
+    "manifests/plugins/ovs/port.pp": "7e22b5aa08d31091126fc5af05434e10",
+    "manifests/plugins/ovs.pp": "44b04e264cb407698f90a7a4e65e3c08",
+    "manifests/quota.pp": "3d182181692e9753c0a224b65878040c",
+    "manifests/server.pp": "514ecca83f693d66ef739962cd7676a9",
+    "manifests/services/fwaas.pp": "8a62024134a74fd928c9f6df6f86c118",
+    "spec/classes/neutron_agents_dhcp_spec.rb": "38930c38b5d583957bdd46efe21a5eb9",
+    "spec/classes/neutron_agents_l3_spec.rb": "c8cd9940ededf9e0678d6aae3dca7415",
+    "spec/classes/neutron_agents_lbaas_spec.rb": "097b59487168ed341fddae3452c647d1",
+    "spec/classes/neutron_agents_linuxbridge_spec.rb": "d90b3eed4f3dd472f01544323be21b2e",
+    "spec/classes/neutron_agents_metadata_spec.rb": "44445e139d06abe2e8b04764acb9f989",
+    "spec/classes/neutron_agents_metering_spec.rb": "cbc0c9977bfffc39822ca31a2eea4ebd",
+    "spec/classes/neutron_agents_ovs_spec.rb": "e5c8d5413d7552e017751b1cfe05df65",
+    "spec/classes/neutron_agents_vpnaas_spec.rb": "f160e95e178926bdfeaab1893773cf6d",
+    "spec/classes/neutron_client_spec.rb": "2a1472c314dc3bcd2ebfb0d3e468a4d6",
+    "spec/classes/neutron_db_mysql_spec.rb": "303b9510fd91b85b5fe66380f37d80c9",
+    "spec/classes/neutron_init_spec.rb": "b3b9d87cb549918243fa64976bcb95f6",
+    "spec/classes/neutron_keystone_auth_spec.rb": "f5458f12fa66dad5c638d6d6d66bcd44",
+    "spec/classes/neutron_plugins_cisco_spec.rb": "04c0a0a1f94c312cabc919c2eaf91ab9",
+    "spec/classes/neutron_plugins_linuxbridge_spec.rb": "f0c8b157101ef8afd7c2e6486349f3b0",
+    "spec/classes/neutron_plugins_ml2_spec.rb": "42e446d674f5556dd13e8a84174f9fee",
+    "spec/classes/neutron_plugins_nvp_spec.rb": "ad3f24c86f863f4628dd99997787040c",
+    "spec/classes/neutron_plugins_ovs_spec.rb": "cf4b52e03b1349f90e97f43f42cfbb8e",
+    "spec/classes/neutron_quota_spec.rb": "f8ae6f989d4578efd445b978ba339fc7",
+    "spec/classes/neutron_server_spec.rb": "9e309c49b3ab87d2903fcaabd2d03090",
+    "spec/classes/neutron_services_fwaas_spec.rb": "ecc957a2613c857d470d46fb5ad976b0",
+    "spec/defines/neutron_db_mysql_host_access_spec.rb": "766fba87e4505627c3e224d968b90cff",
+    "spec/shared_examples.rb": "172c63c57efca8c741f297494ed9ef0f",
+    "spec/spec_helper.rb": "41d71ed92d01bb23d52397572e9b24bb",
+    "spec/unit/provider/neutron_l3_ovs_bridge/neutron_spec.rb": "4f0f61cd1d2ad500dd5fd8f6bd457377",
+    "spec/unit/provider/neutron_network/neutron_spec.rb": "ed876c0eee4e2400345533f717e4c37c",
+    "spec/unit/provider/neutron_router/neutron_spec.rb": "ea39b71183502e06ae46503b633de7ca",
+    "spec/unit/provider/neutron_router_interface/neutron_spec.rb": "03d425ae2fd6e4ee354179c9f239bd39",
+    "spec/unit/provider/neutron_spec.rb": "db3de8911a9a39fb69e099e071b63e64",
+    "spec/unit/provider/neutron_subnet/neutron_spec.rb": "554cf4bd74e8b627572d6d626bf002aa"
+  }
+}
