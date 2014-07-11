@@ -9,7 +9,7 @@ This open source project will help you to deploy OpenStack muti-node in a simple
 ###How to use?
 * Clone this repo on all of the node:
 ```
-git clone https://github.com/jiasir/puppet-openstack.git
+git clone https://github.com/nofdev/puppet-openstack.git
 ```
 
 * Install the Puppet master on the Puppet master server:
