@@ -6,7 +6,41 @@ An easiest way to deploy OpenStack muti-node.
 ### Overview
 This open source project will help you to deploy OpenStack muti-node in a simple way. Only for OpenStack Havana on Ubuntu 12.04 LTS.
 
-###How to use?
+### How to use?
+* Clone this repo on all of the node:
+```
+git clone https://github.com/nofdev/puppet-openstack.git
+```
+
+* Install the Puppet master on the Puppet master server:
+```
+python setup.py puppetmaster
+```
+
+* Install the Puppet agent on the Puppet agent server:
+```
+python setup.py puppetagent
+```
+
+* Modify the site.pp for your enviroment:
+```
+vi pp/site.pp
+```
+
+* Install the OpenStack Controller node on the Controller server:
+```
+python setup.py gen-cert openstack_controller
+python setup.py deploy openstack_controller
+```
+
+* Install the OpenStack Compute node on the Compute server(n is a number):
+```
+python setup.py gen-cert openstack_compute n
+python setup.py deploy openstack_compute n
+```
+
+
+###Or using shell script if your python version > 2.7
 * Clone this repo on all of the node:
 ```
 git clone https://github.com/nofdev/puppet-openstack.git
