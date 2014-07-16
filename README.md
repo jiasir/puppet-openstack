@@ -22,9 +22,9 @@ python setup.py puppetmaster
 python setup.py puppetagent
 ```
 
-* Modify the site.pp for your enviroment:
+* Modify the site.pp for your enviroment on Puppet master:
 ```
-vi pp/site.pp
+vi /etc/puppet/manifests/site.pp
 ```
 
 * Install the OpenStack Controller node on the Controller server:
@@ -56,9 +56,9 @@ bash scripts/puppet-installer.sh master
 bash scripts/puppet-installer.sh agent
 ```
 
-* Modify the site.pp for your enviroment:
+* Modify the site.pp for your enviroment on Puppet master:
 ```
-vi pp/site.pp
+vi /etc/puppet/manifests/site.pp
 ```
 
 * Install the OpenStack Controller node on the Controller server:
