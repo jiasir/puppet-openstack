@@ -8,7 +8,7 @@ import os
 import sys
 import logging
 import ConfigParser
-import noflib
+import subprocess
 
 
 # Config file
@@ -57,6 +57,23 @@ def gen_cert_compute(n):
 def deploy_compute(n):
     logger.info('deploy compute %s' % n)
     execute_get_output('bash scripts/compute-installer.sh', 'deploy', 'openstack_compute%s' % n)
+
+def execute_get_output(*command):
+    """Execute and return stdout."""
+    devnull = open(os.devnull, 'w')
+    command = map(str, command)
+    proc = subprocess.Popen(command, close_fds=True,
+                            stdout=subprocess.PIPE, stderr=devnull)
+    devnull.close()
+    stdout = proc.communicate()[0]
+    return stdout.strip()
+
+def execute(*command):
+    """Execute without returning stdout."""
+    devnull = open(os.devnull, 'w')
+    command = map(str, command)
+    subprocess.call(command, close_fds=True, stdout=devnull, stderr=devnull)
+    devnull.close()
 
 def usage():
     print("""Usage: python setup.py [puppetmaster|puppetagent|gen-cert|deploy|openstack_controller|openstack_compute|n]
