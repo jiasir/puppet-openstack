@@ -15,11 +15,6 @@ import noflib
 config_file = ConfigParser.RawConfigParser(allow_no_value=True)
 config_file.read('puppet-openstack.conf')
 
-# Create logger
-logger = logging.getLogger('puppet-openstack')
-logging.basicConfig(filename=log_file_path(), level=log_level(), format=log_format())
-
-
 def log_file_path():
     '''Get log path from config file'''
     logger.info(config_file.get('logging', 'path'))
@@ -34,6 +29,10 @@ def log_format():
     '''Get log format from config file'''
     logger.info(config_file.get('logging', 'format'))
     return config_file.get('logging', 'format')
+
+# Create logger
+logger = logging.getLogger('puppet-openstack')
+logging.basicConfig(filename=log_file_path(), level=log_level(), format=log_format())
 
 def install_puppetmaster():
     logger.info('install puppetmaster')
